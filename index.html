@@ -4,7 +4,40 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <title>Interactive Menu</title>
+  <style>
+    /* Custom styles for the card flip effect */
+    .card {
+      perspective: 1000px;
+    }
+
+    .card-inner {
+      transition: transform 0.5s;
+      transform-style: preserve-3d;
+    }
+
+    .card:hover .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-front,
+    .card-back {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      backface-visibility: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-back {
+      transform: rotateY(180deg);
+    }
+  </style>
 </head>
 <body class="bg-gray-100">
   <div class="container mx-auto mt-8">
@@ -12,24 +45,32 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       <!-- Dish 1 -->
-      <div class="menu-item relative overflow-hidden bg-white rounded-lg shadow-md">
-        <div class="p-4 text-center">
-          <h2 class="text-xl font-semibold mb-2">Dish 1</h2>
-          <p class="text-gray-700 hidden">Description of Dish 1.</p>
-        </div>
-        <div class="image-container">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWe45Ei2h-ejAgxIWMkxUJT1uOCffLnKIpIw&usqp=CAU" alt="Dish 1" class="w-full h-40 object-cover hidden">
+      <div class="menu-item card relative overflow-hidden bg-white rounded-lg shadow-md">
+        <div class="card-inner">
+          <div class="card-front p-4 text-center">
+            <h2 class="text-xl font-semibold mb-2">Dish 1</h2>
+            <p class="text-gray-700">Click or hover to see more!</p>
+          </div>
+          <div class="card-back p-4 text-center">
+            <h2 class="text-xl font-semibold mb-2">Dish 1</h2>
+            <p class="text-gray-700">Description of Dish 1.</p>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWe45Ei2h-ejAgxIWMkxUJT1uOCffLnKIpIw&usqp=CAU" alt="Dish 1" class="w-full h-40 object-cover">
+          </div>
         </div>
       </div>
 
       <!-- Dish 2 -->
-      <div class="menu-item relative overflow-hidden bg-white rounded-lg shadow-md">
-        <div class="p-4 text-center">
-          <h2 class="text-xl font-semibold mb-2">Dish 2</h2>
-          <p class="text-gray-700 hidden">Description of Dish 2.</p>
-        </div>
-        <div class="image-container">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWe45Ei2h-ejAgxIWMkxUJT1uOCffLnKIpIw&usqp=CAU" alt="Dish 2" class="w-full h-40 object-cover hidden">
+      <div class="menu-item card relative overflow-hidden bg-white rounded-lg shadow-md">
+        <div class="card-inner">
+          <div class="card-front p-4 text-center">
+            <h2 class="text-xl font-semibold mb-2">Dish 2</h2>
+            <p class="text-gray-700">Click or hover to see more!</p>
+          </div>
+          <div class="card-back p-4 text-center">
+            <h2 class="text-xl font-semibold mb-2">Dish 2</h2>
+            <p class="text-gray-700">Description of Dish 2.</p>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWe45Ei2h-ejAgxIWMkxUJT1uOCffLnKIpIw&usqp=CAU" alt="Dish 2" class="w-full h-40 object-cover">
+          </div>
         </div>
       </div>
 
@@ -38,24 +79,18 @@
     </div>
   </div>
 
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script>
+    // jQuery for the card flip effect
     $(document).ready(function() {
-  // Add hover effect to menu items
-  $('.menu-item').hover(
-    function() {
-      $(this).find('.image-container img').removeClass('hidden');
-      $(this).find('.image-container img').css('transform', 'scale(1.1)');
-      $(this).find('.p-4 p').removeClass('hidden');
-    },
-    function() {
-      $(this).find('.image-container img').addClass('hidden');
-      $(this).find('.image-container img').css('transform', 'scale(1)');
-      $(this).find('.p-4 p').addClass('hidden');
-    }
-  );
-});
-
+      $('.card').hover(
+        function() {
+          $(this).find('.card-inner').css('transform', 'rotateY(180deg)');
+        },
+        function() {
+          $(this).find('.card-inner').css('transform', 'rotateY(0deg)');
+        }
+      );
+    });
   </script>
 </body>
 </html>
