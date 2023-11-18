@@ -13,19 +13,23 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       <!-- Dish 1 -->
       <div class="menu-item relative overflow-hidden bg-white rounded-lg shadow-md">
-        <img src="https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg" alt="Dish 1" class="w-full h-40 object-cover">
-        <div class="p-4">
+        <div class="image-container">
+          <img src="dish1.jpg" alt="Dish 1" class="w-full h-40 object-cover">
+        </div>
+        <div class="p-4 text-center">
           <h2 class="text-xl font-semibold mb-2">Dish 1</h2>
-          <p class="text-gray-700">Description of Dish 1.</p>
+          <p class="text-gray-700 hidden">Description of Dish 1.</p>
         </div>
       </div>
 
       <!-- Dish 2 -->
       <div class="menu-item relative overflow-hidden bg-white rounded-lg shadow-md">
-        <img src="https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg" alt="Dish 2" class="w-full h-40 object-cover">
-        <div class="p-4">
+        <div class="image-container">
+          <img src="dish2.jpg" alt="Dish 2" class="w-full h-40 object-cover">
+        </div>
+        <div class="p-4 text-center">
           <h2 class="text-xl font-semibold mb-2">Dish 2</h2>
-          <p class="text-gray-700">Description of Dish 2.</p>
+          <p class="text-gray-700 hidden">Description of Dish 2.</p>
         </div>
       </div>
 
@@ -40,10 +44,12 @@
   // Add hover effect to menu items
   $('.menu-item').hover(
     function() {
-      $(this).find('img').css('transform', 'scale(1.1)');
+      $(this).find('.image-container img').css('transform', 'scale(1.1)');
+      $(this).find('.p-4 p').removeClass('hidden');
     },
     function() {
-      $(this).find('img').css('transform', 'scale(1)');
+      $(this).find('.image-container img').css('transform', 'scale(1)');
+      $(this).find('.p-4 p').addClass('hidden');
     }
   );
 });
