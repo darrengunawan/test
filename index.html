@@ -15,52 +15,38 @@
     <input type="text" id="new-task" class="w-full p-2 border rounded mt-4" placeholder="Add a new task">
   </div>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script>
-        $(document).ready(function() {
-  // Function to add a new task
-  function addTask(taskText) {
-    const taskItem = `<li class="flex items-center justify-between bg-white p-3 rounded shadow-md">
-                        <span class="drag-handle cursor-move">&#9776;</span>
-                        <span class="task-text">${taskText}</span>
-                        <button class="delete-task text-red-500">&times;</button>
-                      </li>`;
-    $('#task-list').append(taskItem);
-  }
-
-  // Function to initialize sortable tasks
-  function initSortable() {
-    $('#task-list').sortable({
-      handle: '.drag-handle',
-      update: function() {
-        // Handle update (reorder) event
-        // You can save the new order of tasks here
-      },
+  <script src="path/to/jquery.min.js"></script>
+  <script>
+    $(document).ready(function () {
+    // Add Task
+    $("#addTaskBtn").on("click", function () {
+        const taskText = $("#taskInput").val();
+        if (taskText.trim() !== "") {
+            const listItem = `<li class="flex justify-between items-center bg-gray-100 px-4 py-2 rounded">
+                                  <span class="drag-handle cursor-move">&#9776;</span>
+                                  <span>${taskText}</span>
+                                  <button class="text-red-500 delete-btn">Delete</button>
+                              </li>`;
+            $("#todoList").append(listItem);
+            $("#taskInput").val("");
+        }
     });
-  }
 
-  // Event listener for adding a new task
-  $('#new-task').keypress(function(event) {
-    if (event.which === 13) { // Enter key
-      const taskText = $('#new-task').val();
-      if (taskText.trim() !== '') {
-        addTask(taskText);
-        $('#new-task').val('');
-        initSortable(); // Reinitialize sortable after adding a new task
-      }
-    }
-  });
+    // Delete Task
+    $("#todoList").on("click", ".delete-btn", function () {
+        $(this).closest("li").remove();
+    });
 
-  // Event listener for deleting a task
-  $('#task-list').on('click', '.delete-task', function() {
-    $(this).closest('li').remove();
-    initSortable(); // Reinitialize sortable after deleting a task
-  });
-
-  // Initialize sortable on page load
-  initSortable();
+    // Make the list items sortable
+    $("#todoList").sortable({
+        handle: ".drag-handle",
+        update: function (event, ui) {
+            // Handle the update event (rearranging tasks)
+          alert("Hello");
+        }
+    });
 });
 
-    </script>
+  </script>
 </body>
 </html>
