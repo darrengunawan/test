@@ -46,6 +46,8 @@
         handle: ".drag-handle",
         update: function (event, ui) {
             // Handle the update event (rearranging tasks)
+            const updatedOrder = $(this).sortable('toArray', { attribute: 'data-task-id' });
+        console.log("Updated Order:", updatedOrder);
           alert("hello");
         }
     });
