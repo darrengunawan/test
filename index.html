@@ -1,96 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-  <title>Interactive Menu</title>
-  <style>
-    /* Custom styles for the card flip effect */
-    .card {
-      perspective: 1000px;
-    }
-
-    .card-inner {
-      transition: transform 0.5s;
-      transform-style: preserve-3d;
-    }
-
-    .card:hover .card-inner {
-      transform: rotateY(180deg);
-    }
-
-    .card-front,
-    .card-back {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      backface-visibility: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 1rem;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .card-back {
-      transform: rotateY(180deg);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>To-Do List</title>
 </head>
-<body class="bg-gray-100">
+<body>
   <div class="container mx-auto mt-8">
-    <h1 class="text-3xl font-bold mb-4">Our Menu</h1>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <!-- Dish 1 -->
-      <div class="menu-item card relative overflow-hidden bg-white rounded-lg shadow-md">
-        <div class="card-inner">
-          <div class="card-front p-4 text-center">
-            <h2 class="text-xl font-semibold mb-2">Dish 1</h2>
-            <p class="text-gray-700">Click or hover to see more!</p>
-          </div>
-          <div class="card-back p-4 text-center">
-            <h2 class="text-xl font-semibold mb-2">Dish 1</h2>
-            <p class="text-gray-700">Description of Dish 1.</p>
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWe45Ei2h-ejAgxIWMkxUJT1uOCffLnKIpIw&usqp=CAU" alt="Dish 1" class="w-full h-40 object-cover">
-          </div>
-        </div>
-      </div>
-
-      <!-- Dish 2 -->
-      <div class="menu-item card relative overflow-hidden bg-white rounded-lg shadow-md">
-        <div class="card-inner">
-          <div class="card-front p-4 text-center">
-            <h2 class="text-xl font-semibold mb-2">Dish 2</h2>
-            <p class="text-gray-700">Click or hover to see more!</p>
-          </div>
-          <div class="card-back p-4 text-center">
-            <h2 class="text-xl font-semibold mb-2">Dish 2</h2>
-            <p class="text-gray-700">Description of Dish 2.</p>
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWe45Ei2h-ejAgxIWMkxUJT1uOCffLnKIpIw&usqp=CAU" alt="Dish 2" class="w-full h-40 object-cover">
-          </div>
-        </div>
-      </div>
-
-      <!-- Add more dishes as needed -->
-
+    <div class="max-w-md mx-auto">
+        <h1 class="text-2xl font-bold mb-4">To-Do List</h1>
+        <ul id="todoList" class="list-disc space-y-2">
+            <!-- Tasks will be dynamically added here -->
+        </ul>
+        <input type="text" id="taskInput" class="w-full border rounded px-2 py-1 mt-4" placeholder="Add a new task">
+        <button id="addTaskBtn" class="bg-blue-500 text-white px-4 py-2 mt-2">Add Task</button>
     </div>
-  </div>
+</div>
 
-  <script>
-    // jQuery for the card flip effect
-    $(document).ready(function() {
-      $('.card').hover(
-        function() {
-          $(this).find('.card-inner').css('transform', 'rotateY(180deg)');
-        },
-        function() {
-          $(this).find('.card-inner').css('transform', 'rotateY(0deg)');
+
+  
+    <!-- Your content goes here -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+      $(document).ready(function () {
+    // Add Task
+    $("#addTaskBtn").on("click", function () {
+        const taskText = $("#taskInput").val();
+        if (taskText.trim() !== "") {
+            const listItem = `<li class="flex justify-between items-center bg-gray-100 px-4 py-2 rounded">
+                                  <span class="drag-handle cursor-move">&#9776;</span>
+                                  <span>${taskText}</span>
+                                  <button class="text-red-500 delete-btn">Delete</button>
+                              </li>`;
+            $("#todoList").append(listItem);
+            $("#taskInput").val("");
         }
-      );
     });
-  </script>
+
+    // Delete Task
+    $("#todoList").on("click", ".delete-btn", function () {
+        $(this).closest("li").remove();
+    });
+
+    // Make the list items sortable
+    $("#todoList").sortable({
+        handle: ".drag-handle",
+        update: function (event, ui) {
+            // Handle the update event (rearranging tasks)
+        }
+    });
+});
+
+    </script>
 </body>
 </html>
