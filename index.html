@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag-and-Drop Planner</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <style>
+        /* Optional: You can customize the styling further here */
+        body {
+            background-color: #f4f4f4;
+        }
+
+        .task {
+            @apply bg-white border rounded p-4 m-4 cursor-move;
+        }
+    </style>
+</head>
+<body>
+
+<div id="planner" class="flex overflow-x-auto p-4" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    // Sample tasks
+    const tasks = ['Task 1', 'Task 2', 'Task 3', 'Task 4'];
+
+    // Initialize planner with tasks
+    const planner = $('#planner');
+    tasks.forEach(task => {
+        const taskElement = createTaskElement(task);
+        planner.append(taskElement);
+    });
+
+    // Make tasks draggable
+    $('.task').draggable({
+        helper: 'clone',
+        cursor: 'move',
+        revert: 'invalid'
+    });
+
+    // Make planner droppable
+    planner.droppable({
+        drop: function (event, ui) {
+            const taskText = ui.helper.text();
+            const taskElement = createTaskElement(taskText);
+            planner.append(taskElement);
+        }
+    });
+
+    // Functions
+    function createTaskElement(task) {
+        const taskElement = $('<div>').addClass('task').text(task);
+        taskElement.draggable({
+            helper: 'clone',
+            cursor: 'move',
+            revert: 'invalid'
+        });
+        return taskElement;
+    }
+
+    function allowDrop(event) {
+        event.preventDefault();
+    }
+</script>
+
+</body>
+</html>
+
